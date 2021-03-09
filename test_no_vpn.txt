@@ -1,2 +1,0 @@
-if no vpn
- failed to push!
