@@ -20,7 +20,7 @@ def cal_cost(purchase_dict, servers_Pool):
         cpu = servers_Dict[name][0] / 2
         nc = servers_Dict[name][1] / 2
         # print(cpu, nc)
-        if servers_Pool[i][1] != cpu or servers_Pool[i][3] != cpu or servers_Pool[i][2] != nc or servers_Pool[i][3] != nc:
+        if servers_Pool[i][1] != cpu or servers_Pool[i][3] != cpu or servers_Pool[i][2] != nc or servers_Pool[i][4] != nc:
             hardwareSum += servers_Dict[name][3]
             # print("每天能耗成本: ", hardwareSum)
 

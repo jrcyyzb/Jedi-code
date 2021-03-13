@@ -113,11 +113,11 @@ def main():
 					del vm_Pool[request[1]]
 				if process == 0:
 					servers_type = servers_Pcha()  # 确定服务器购买类型,后期可返回待选服务器类型
-					purchase += 1
 					if servers_type in purchase_dict:
 						purchase_dict[servers_type] += 1
 					else:
 						purchase_dict[servers_type] = 1
+						purchase += 1
 					servers_Pool.append([servers_type, servers_Dict[servers_type][0]/2, servers_Dict[servers_type][1]/2, servers_Dict[servers_type][0]/2, servers_Dict[servers_type][1]/2, 1])
 		migration_list = vm_Migra()  # 虚拟机迁移，启发式迁移
 
