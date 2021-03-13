@@ -31,7 +31,7 @@ def get_input():
     '''
     # 需要提交时把下三行代码注释即可
     import sys
-    filename = "./training-data/training-2.txt"
+    filename = "./training-data/training-1.txt"
     # 将python标准输入input函数重定向为filename
     sys.stdin = open(filename, 'r')
 
