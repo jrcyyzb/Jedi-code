@@ -93,25 +93,63 @@ def split_vm():
 	return vm_L, vm_M, vm_S, max_types
 
 
-def nDay_servers(req_Sqe, vm_L, vm_M, vm_S):
+def nDay_servers(req_Sqe, vm_L, vm_M, vm_S, server_L, server_M, server_S):
 	'''
 	计算n天所需的大中小服务器的数量
 	:req_Sqe  n天里的请求
 	'''
-	num_L = 0
-	num_M = 0
-	num_S = 0
-	classes = split_vm()
+
+	# 三种类型的服务器资源
+	cpu_L  = servers_Dict[server_L][0]
+	memory_L = servers_Dict[server_L][1]
+	cpu_M = servers_Dict[server_M][0]
+	memory_M = servers_Dict[server_M][1]
+	cpu_S = servers_Dict[server_S][0]
+	memory_S = servers_Dict[server_S][1]
+
+
+	cost_L = cost_M = cost_S = [0, 0]
 	for day in req_Sqe:
 		for request in day:
 			if request[0] == 'del':
 				continue
-			if request[1] in vm_L:
-				num_L += 1
-			elif request[1] in vm_M:
-				num_M += 1
+			vm_type = request[1]
+			cpu_req = vm_Dict[vm_type][0]
+			memory_req = vm_Dict[vm_type][1]
+			if vm_type in vm_L:  # 若是大服务器，统计所需cpu、内存总成本
+				# 若请求是双节点部署
+				if vm_Dict[vm_type][2]:
+					cost_L[0] += cpu_req * 2
+					cost_L[1] += memory_req * 2
+				else:  # 单节点
+					cost_L[0] += cpu_req
+					cost_L[1] += memory_req
+			elif vm_type in vm_M:
+				if vm_Dict[vm_type][2]:
+					cost_M[0] += cpu_req * 2
+					cost_M[1] += memory_req * 2
+				else:  # 单节点
+					cost_M[0] += cpu_req
+					cost_M[1] += memory_req
 			else:
-				num_S += 1
+				if vm_Dict[vm_type][2]:
+					cost_S[0] += cpu_req * 2
+					cost_S[1] += memory_req * 2
+				else:  # 单节点
+					cost_S[0] += cpu_req
+					cost_S[1] += memory_req
+	cpu = round(cost_L[0] / cpu_L + 0.5)
+	memory = round(cost_L[1] / memory_L + 0.5)
+	num_L = cpu if cpu > memory else memory
+
+	cpu = round(cost_M[0] / cpu_M + 0.5)
+	memory = round(cost_M[1] / memory_M + 0.5)
+	num_M = cpu if cpu > memory else memory
+
+	cpu = round(cost_S[0] / cpu_S + 0.5)
+	memory = round(cost_S[1] / memory_S + 0.5)
+	num_S = cpu if cpu > memory else memory
+
 	return num_L, num_M, num_S
 
 
@@ -252,7 +290,7 @@ def main():
 		# 取n天的请求
 		requests = req_Sqe[i*n: (i+1)*n]
 		# 求出requests中所需大中小服务器的数量
-		num_L, num_M, num_S = nDay_servers(requests, vm_L, vm_M, vm_S)
+		num_L, num_M, num_S = nDay_servers(requests, vm_L, vm_M, vm_S, server_L, server_M, server_S)
 		print("第{}次循环: num_L={}, num_M={}, num_S={}".format(str(i),
 					str(num_L), str(num_M), str(num_S)))
 
