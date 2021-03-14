@@ -22,7 +22,7 @@ def get_input():
         M:  售卖的虚拟机类型数量, int
         virtualMachines:  所有虚拟机类型信息, dict
             {'第一种虚拟机型号':[cpu核数,内存大小,是否双节点部署], '第二种...':...}
-            注：若虚拟机是双节点部署，则列表格式为：[cpu核数/2, 内存大小/2, 1, cpu核数/2, 内存大小/2]
+            注：若虚拟机是双节点部署，则列表格式为：[cpu核数/2, 内存大小/2, 1]
                 否则, 为:  [cpu核数,内存大小, 0]
         T:  共有T天的用户请求序列, list
         requests:  所有的用户请求序列, list
@@ -77,8 +77,8 @@ def get_input():
             vm.append(cpu/2)
             vm.append(memory/2)
             vm.append(isTwoNode)
-            vm.append(cpu / 2)
-            vm.append(memory / 2)
+            # vm.append(cpu / 2)
+            # vm.append(memory / 2)
         else:
             vm.append(cpu)
             vm.append(memory)
