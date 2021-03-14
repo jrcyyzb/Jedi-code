@@ -30,8 +30,7 @@ def servers_fit_vm(max_vm_type, left, right):
 				or vm_Dict[vmCpu_type][1] > memory or vm_Dict[vmMemory_type][1] > memory:
 			continue
 		return servers_type
-
-	print('错误：没找到符合条件的服务器!')
+	# print('错误：没找到符合条件的服务器!')
 
 def choose_servers(max_vm_types):
 	'''
@@ -323,32 +322,8 @@ def main():
 	print("costSum总成本:", costSum)
 	'''
 
-'''
-def test():
-	vm_L, vm_M, vm_S, max_vm = split_vm()
-	cnt = len(vm_L) + len(vm_M) + len(vm_S)
-	print("vm_L::", len(vm_L))
-	print("vm_M::", len(vm_M))
-	print("vm_S::", len(vm_S))
-
-	print("虚拟机综总数:", cnt)
-	print("## start 划分虚拟机 ##")
-	print("cpu/内存占比大的:" , vm_L)
-	print("cpu/内存占比中的:", vm_M)
-	print("cpu/内存占比小的:", vm_S)
-	print("## end 划分虚拟机 ##")
-	print("## start 划分服务器 ##")
-	server_L, server_M, server_S = choose_servers(max_vm)
-	print("cpu/内存占比大的:", server_L)
-	print("cpu/内存占比中的:", server_M)
-	print("cpu/内存占比小的:", server_S)
-	print("## end 划分服务器 ##")
-'''
-
 if __name__ == '__main__':
 	start = time.process_time()
 	main()
 	end = time.process_time()
 	print("运行时间：", end - start)
-
-	# test()
