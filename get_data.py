@@ -22,6 +22,8 @@ def get_input():
         M:  售卖的虚拟机类型数量, int
         virtualMachines:  所有虚拟机类型信息, dict
             {'第一种虚拟机型号':[cpu核数,内存大小,是否双节点部署], '第二种...':...}
+            注：若虚拟机是双节点部署，则列表格式为：[cpu核数/2, 内存大小/2, 1]
+                否则, 为:  [cpu核数,内存大小, 0]
         T:  共有T天的用户请求序列, list
         requests:  所有的用户请求序列, list
             [   [[第一天第一条请求], [第一天第二条请求], ...],
@@ -30,10 +32,10 @@ def get_input():
             ]
     '''
     # 需要提交时把下三行代码注释即可
-    import sys
-    filename = "./training-data/training-1.txt"
-    # 将python标准输入input函数重定向为filename
-    sys.stdin = open(filename, 'r')
+    # import sys
+    # filename = "./training-data/training-1.txt"
+    # # 将python标准输入input函数重定向为filename
+    # sys.stdin = open(filename, 'r')
 
     # 可以采购的服务器类型数量
     N = int(input())
@@ -68,11 +70,19 @@ def get_input():
         infomations_vm = extract(input())
         type = infomations_vm[0].strip()
         cpu = int(infomations_vm[1].strip())
-        vm.append(cpu)
         memory = int(infomations_vm[2].strip())
-        vm.append(memory)
         isTwoNode = int(infomations_vm[3].strip())
-        vm.append(isTwoNode)
+        # 若虚拟机是双节点
+        if isTwoNode == 1:
+            vm.append(cpu/2)
+            vm.append(memory/2)
+            vm.append(isTwoNode)
+            # vm.append(cpu / 2)
+            # vm.append(memory / 2)
+        else:
+            vm.append(cpu)
+            vm.append(memory)
+            vm.append(isTwoNode)
         virtualMachines[type] = vm
     # T天的用户请求
     T = int(input())

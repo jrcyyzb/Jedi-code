@@ -11,6 +11,6 @@ if __name__=='__main__':
         for request in req_Sqe[j]:
             if request[0] == 'add':
                 vm_Pool[request[2]] = [j]  # 加入虚拟机列表
-                #print("id: ", request[2], " day: ", j)
+                print("id: ", request[2], " day: ", j)
             elif request[0] == 'del':  # 删除
                 print("id:", request[1], "天数：", j-vm_Pool[request[1]][0])
