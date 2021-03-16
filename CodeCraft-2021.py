@@ -4,6 +4,8 @@ import get_data
 import numpy as np
 from cal_cost import cal_cost
 
+# 使用 cpu*内存/硬件成本 来选择服务器
+
 # 返回的虚拟机和服务器表可以处理一下，双节点的就按双节点的存
 servers_Num, servers_Dict, vm_Num, vm_Dict, Days, req_Sqe = get_data.get_input()
 vm_perfom = []
@@ -16,6 +18,7 @@ def servers_fit_vm(max_vm_type, left, right):
     在下标为[left, right)范围的服务器内选取能容纳max_vm_type的服务器型号
     :return  返回满足条件的服务器型号
     '''
+
     for i in range(left, right):
         servers_type = servers_perfom[i][0]
         cpu = servers_Dict[servers_type][0] / 2
@@ -180,7 +183,7 @@ def servers_statist():
     '''
     for type, servers_inf in servers_Dict.items():
         # print(servers_inf)
-        servers_perfom.append([type, servers_inf[0] / servers_inf[1], servers_inf[2]])
+        servers_perfom.append([type, servers_inf[0]*servers_inf[1]/servers_inf[2]])
 
 
 def vm_Migra(servers_pool, ):  # 有可能就往一台机子上移，大的先移
